@@ -3,7 +3,7 @@ import requests
 from pprint import pprint
 
 
-bankAmount = 220000  # Specify bank amount
+bankAmount = 235696  # Specify bank amount
 
 #Получаем цену актива в USDT
 
@@ -133,7 +133,11 @@ def main():
     for i in range(len(pricesUSDT)):
         bankProfitUSDT.append(coinVolume[0] / pricesUSDT[i] * fiatExitPoints [i+1])
         potentialProfitUSDT.append(bankProfitUSDT[i] - bankAmount)
-        print(ascii("USDT => " + assets[i+1] + " Profit = " + str(potentialProfitUSDT[i]) + " Bank = " + str(bankProfitUSDT[i])))
+        if potentialProfitUSDT[i] > 0:
+            print('='.center(80, '='))
+            print("Объем монеты " + str(coinVolume[0]) + " Цена в USDT " + str(pricesUSDT[i]) + " Цена на P2P " + str(fiatExitPoints[i+1]))
+            print("Покупаем USDT на P2P по " + str(fiatEnterPoints[0]) + " руб. " + " USDT => " + assets[i+1] + " Profit = " + str(potentialProfitUSDT[i]) + " Bank = " + str(bankProfitUSDT[i]))
+        
 
     potentialProfitBTC = []
     bankProfitBTC = []
@@ -156,7 +160,9 @@ def main():
             else:
                 bankProfitBTC.append(coinVolume[1] * pricesBTC[j] * fiatExitPoints [i])
                 potentialProfitBTC.append(bankProfitBTC[j] - bankAmount)
-            print(ascii("BTC => " + assets[i] + " Profit = " + str(potentialProfitBTC[j]) + " Bank = " + str(bankProfitBTC[j])))
+            if potentialProfitBTC[j] > 0:
+                print('='.center(80, '='))
+                print("Покупаем BTC на P2P по " + str(fiatEnterPoints[1]) + " руб. " + "BTC => " + assets[i] + " Profit = " + str(potentialProfitBTC[j]) + " Bank = " + str(bankProfitBTC[j]))
             j = j+1
 
     #Calculate potential profit for ETH enter point
@@ -169,20 +175,25 @@ def main():
             else:
                 bankProfitBTC.append(coinVolume[1] * pricesBTC[j] * fiatExitPoints [i])
                 potentialProfitBTC.append(bankProfitBTC[j] - bankAmount)
-            print(ascii("ETH => " + assets[i] + " Profit = " + str(potentialProfitBTC[j]) + " Bank = " + str(bankProfitBTC[j])))
+            if potentialProfitBTC[j] > 0:
+                print('='.center(80, '='))
+                print("Покупаем ETH на P2P по " + str(fiatEnterPoints[2]) + " руб. " + "ETH => " + assets[i] + " Profit = " + str(potentialProfitBTC[j]) + " Bank = " + str(bankProfitBTC[j]))
             j = j+1
 
     #Calculate potential profit for BNB enter point
     j=0
     for i in range(len(pricesBTC) + 1):
-        if i != 2:
+        if i != 3:
             if pricesBTC[j] < 1:
                 bankProfitBTC.append(coinVolume[1] / pricesBTC[j] * fiatExitPoints [i])
                 potentialProfitBTC.append(bankProfitBTC[j] - bankAmount)
             else:
                 bankProfitBTC.append(coinVolume[1] * pricesBTC[j] * fiatExitPoints [i])
                 potentialProfitBTC.append(bankProfitBTC[j] - bankAmount)
-            print(ascii("BNB => " + assets[i] + " Profit = " + str(potentialProfitBTC[j]) + " Bank = " + str(bankProfitBTC[j])))
+
+            if potentialProfitBTC[j] > 0:
+                print('='.center(80, '='))
+                print("Покупаем BNB на P2P по " + str(fiatEnterPoints[3]) + " руб. " + "BNB => " + assets[i] + " Profit = " + str(potentialProfitBTC[j]) + " Bank = " + str(bankProfitBTC[j]))
             j = j+1
 
 if __name__ == '__main__':
